@@ -6,7 +6,9 @@
   "author": "Shubidumdu <skaty4870@naver.com>",
   "license": "MIT",
   "scripts": {
-    "start": "sls offline start"
+    "start": "sls offline start",
+    "deploy": "sls deploy",
+    "remove": "sls remove"
   },
   "devDependencies": {
     "@types/koa": "^2.13.1",
