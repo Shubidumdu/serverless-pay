@@ -11,23 +11,34 @@
 #
 # Happy Coding!
 
-service: serverless-payment
+service: serverless-pay
 # app and org for use with dashboard.serverless.com
-app: payment-api
-org: shubidumdu
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
 frameworkVersion: '2'
+
+custom:
+  webpack:
+    webpackConfig: './webpack.config.js'
+    includeModules: true
+    packager: 'yarn'
+    excludeFiles: src/**/*.test.js
+  serverless-offline:
+    httpPort: 3000
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
 
 provider:
   name: aws
   runtime: nodejs12.x
   lambdaHashingVersion: 20201221
 
-# you can overwrite defaults here
-  stage: dev
+  # you can overwrite defaults here
   region: ap-northeast-2
+  stage: dev
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -58,8 +69,11 @@ provider:
 #    - include-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
+  app:
+    handler: src/index.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
