@@ -10,3 +10,7 @@ jspm_packages
 
 # ETC.
 credentials.md
+
+# Environment Variables
+.env.dev
+.env.prod
